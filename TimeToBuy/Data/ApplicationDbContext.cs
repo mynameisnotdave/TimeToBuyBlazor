@@ -11,7 +11,7 @@ public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options
         base.OnModelCreating(modelBuilder);
 
         // Seed data
-        var products = new List<Product>()
+        List<Product> products = new List<Product>()
         {
             new() { Id = 1, Name = "The Witcher 3: Wild Hunt", ImageUrl="https://via.placeholder.com/400", ShortDescription = "Role-playing game", Description = "Geralt of Rivia, a lone monster hunter, struggles to find his place in a world where people often prove more wicked than beasts.", CurrentPrice = 49.99M },
             new() { Id = 2, Name = "Grand Theft Auto V", ImageUrl="https://via.placeholder.com/400", ShortDescription = "Action-adventure game", Description = "Los Santos: a sprawling sun-soaked metropolis full of self-help gurus, starlets, and fading celebrities, once the envy of the Western world, now struggling to stay afloat in an era of economic uncertainty and cheap reality TV.", CurrentPrice = 59.99M },

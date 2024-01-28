@@ -1,4 +1,50 @@
 ﻿@page "/"
+@using TimeToBuy.Data
+@using Microsoft.EntityFrameworkCore
+@inject ApplicationDbContext Db
+@attribute [StreamRendering]
 
 <PageTitle>Products</PageTitle>
 
+<form method="GET" class="search-form" value="@SearchTerm">
+    <InputText @bind-Value="SearchTerm" />
+    <button type="submit">Search</button>
+</form>
+<section class="card-list product-list">
+    @if (_products is null)
+    {
+        <p>Loading...</p>
+    }
+    else
+    {
+        foreach (var product in _products)
+        {
+            <div class="card">
+                <div class="card-content">
+                    <img src="@product.ImageUrl" alt="@product.Name cover image" class="card-img"/>
+                    <h2 class="title">@product.Name</h2>
+                    <p>@product.Description</p>
+                </div>
+                <div class="card-footer">
+                    <h3 class="price">@product.CurrentPrice.ToString("C")</h3>
+                </div>
+            </div>
+        }
+    }
+</section>
+@code
+{
+    [SupplyParameterFromQuery]
+    public string? SearchTerm { get; set; }
+
+    private List<Product>? _products;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await Task.Delay(1000);
+        
+        _products = await Db.Product
+            .Where(x =>string.IsNullOrEmpty(SearchTerm) || x.Name.ToLower().Contains(SearchTerm.ToLower()))
+            .ToListAsync();
+    }
+}
