@@ -1,0 +1,47 @@
+@page "/Details/{id:int}"
+@using TimeToBuy.Data
+@using Microsoft.EntityFrameworkCore
+@inject ApplicationDbContext Db
+
+@if (_products is null)
+{
+    <p>Loading....</p>
+}
+else
+{
+    foreach (var _product in _products)
+    {
+        <div class="container">
+            <div class="left-column">
+                <img src="https://via.placeholder.com/400" alt="Product Image">
+            </div>
+            <div class="right-column">
+                <div class="main-content">
+                    <h1>@_product.Name</h1>
+                    <p>@_product.Description</p>
+                </div>
+                <div class="checkout-box">
+                    <span>Checkout will go here, shortly</span>
+                </div>
+            </div>
+        </div>
+    }
+}
+
+@code {
+
+    [Parameter] public int? Id { get; set; }
+    private List<Product> _products;
+    
+    protected override async Task OnInitializedAsync()
+    {
+        await Task.Delay(1000);
+        Product myEntity = await Db.Product.FindAsync(Id);
+        Id = myEntity.Id;        
+        _products = await Db.Product
+            .Where(p => p.Id == Id)
+            .ToListAsync();
+    }
+    
+
+}
