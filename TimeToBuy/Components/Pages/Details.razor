@@ -37,7 +37,7 @@ else
     {
         await Task.Delay(1000);
         Product myEntity = await Db.Product.FindAsync(Id);
-        Id = myEntity.Id;        
+        Id = myEntity?.Id;        
         _products = await Db.Product
             .Where(p => p.Id == Id)
             .ToListAsync();
