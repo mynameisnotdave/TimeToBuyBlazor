@@ -1,0 +1,44 @@
+@page "/cart"
+@using TimeToBuy.Data
+@using System.Globalization
+@inject CartService cartService
+
+<article>
+    <h2>Shopping Basket</h2>
+
+    @if (cartInfo is null)
+    {
+        <p>Loading.....</p>
+    }
+    else
+    {
+        @foreach (var cartItem in cartInfo.Items)
+        {
+
+            <section id="shoppingCart">
+                <section id="lineItems">
+                    <div class="line">
+                        <div>
+                            <h4>@cartItem.ProductName</h4>
+                            <p>Qty: @cartItem.Quantity</p></div>
+                        <div>
+                            <h3>@cartItem.LinePrice.ToString("C", new CultureInfo("en-GB"))</h3>
+                        </div>
+                    </div>
+                </section>
+                <section id="summary">
+                    Subtotal (1 items): <strong>@cartItem.UnitPrice.ToString("C", new CultureInfo("en-GB"))</strong>
+                </section>
+            </section>
+        }
+    }
+</article>
+@code {
+    Data.Cart? cartInfo;
+    protected override async Task OnInitializedAsync()
+    {
+        await Task.Delay(1000);
+        Data.Cart? cartDetails = cartService.GetCart();
+        cartInfo = cartDetails;
+    }
+}
