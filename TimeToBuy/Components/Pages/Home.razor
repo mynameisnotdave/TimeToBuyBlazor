@@ -6,7 +6,7 @@
 
 <PageTitle>Products</PageTitle>
 
-<form method="GET" class="search-form" value="@SearchTerm">
+<form method="GET" class="search-form" value="@SearchTerm" @formname="SearchForm">
     <InputText @bind-Value="SearchTerm" />
     <button type="submit">Search</button>
 </form>
@@ -29,8 +29,10 @@
                     <h3 class="price">@product.CurrentPrice.ToString("C")</h3>
                 </div>
             </a>
+
         }
     }
+
 </section>
 @code
 {
@@ -47,4 +49,6 @@
             .Where(x =>string.IsNullOrEmpty(SearchTerm) || x.Name.ToLower().Contains(SearchTerm.ToLower()))
             .ToListAsync();
     }
+
+
 }
