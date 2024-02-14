@@ -12,7 +12,7 @@ public class Cart
     
     public void Handle(AddItemToCartCommand command)
     {
-        var existingItem = Items.SingleOrDefault(x => x.ProductId == command.ProductId);
+        CartItem? existingItem = Items.SingleOrDefault(x => x.ProductId == command.ProductId);
         if (existingItem != null)
         {
             existingItem.Quantity++;

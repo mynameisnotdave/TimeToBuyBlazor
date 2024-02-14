@@ -2,7 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using TimeToBuy.Components;
 using TimeToBuy.Data;
 
-var builder = WebApplication.CreateBuilder(args);
+WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
 // Handle services to the container.
 builder.Services.AddRazorComponents()
@@ -16,7 +16,7 @@ builder.Services.AddSession();
 
 builder.Services.AddScoped<CartService>();
 
-var app = builder.Build();
+WebApplication app = builder.Build();
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
